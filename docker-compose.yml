@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+    laravel_aws:
+        container_name: laravel_aws
+        build:
+            context: .
+            dockerfile: ./docker/php/8.2-fpm/Dockerfile
+        ports:
+            - 8001:8000
+        volumes:
+            - ./:/var/www/app.com.br

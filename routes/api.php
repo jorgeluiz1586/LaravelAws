@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::post('image/upload', function (Request $request) {
+    try {
+        $request->file->storeAs('example', $request->file->getClientOriginalName(), 's3');
+        return response(["message" => "Arquivo armazenado com sucesso"], 200);
+    } catch (\Exception $e) {
+        throw new \Exception($e->getMessage());
+    }
 });
