@@ -1,0 +1,22 @@
+server {
+    server_name app.com.br www.app.com.br;
+    access_log  /var/log/nginx/app.com.br_access.log;
+    error_log  /var/log/nginx/app.com.br_error.log;
+    listen 80; # managed by Certbot
+    listen [::]:80 ipv6only=on; # managed by Certbot
+    root /var/www/app.com.br/public;
+    index index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        fastcgi_param HTTP_PROXY "";
+        fastcgi_pass 0.0.0.0:9000;
+        fastcgi_index index.php;
+        include fastcgi.conf;
+    }
+}
+
+
